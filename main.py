@@ -4,7 +4,7 @@ Usage :  python main.py        (niveau 1 par défaut)
          python main.py 3      (niveau 3)
 """
 
-import sys
+
 import time
 
 from levels import LEVELS
@@ -38,9 +38,9 @@ def run(level_number):
         print(f"Temps : {elapsed:.2f} s")
         # TODO (optionnel) : afficher goal_node.getPath() étape par étape
     else:
-        print("Optimal solution not found")
+        print("Optimal solution not found ")
 
 
 if __name__ == "__main__":
-    level = int(sys.argv[1]) if len(sys.argv) > 1 else 1
+    level = int(input("veulliez entrer le niveaux desirer :\n"))
     run(level)
