@@ -5,7 +5,6 @@ def random_message():
 	messages = [
 		"Keep exploring!",
 		"A surprising result appeared.",
-		"Randomness is useful for testing.",
 	]
 	return random.choice(messages)
 
