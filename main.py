@@ -1,10 +1,3 @@
-"""
-main.py : lance le BFS sur un des 5 niveaux et affiche le résultat.
-Usage :  python main.py        (niveau 1 par défaut)
-         python main.py 3      (niveau 3)
-"""
-
-
 import time
 
 from levels import LEVELS
@@ -14,7 +7,7 @@ from search import Search
 
 
 # ----------------------------------------------------------------------
-# MEMBRE 3
+# Noufel
 # ----------------------------------------------------------------------
 def run(level_number):
     board = LEVELS[level_number]
@@ -36,7 +29,7 @@ def run(level_number):
         print("Solution :", goal_node.getSolution())
         print("Cout du chemin :", goal_node.g)
         print(f"Temps : {elapsed:.2f} s")
-        # TODO (optionnel) : afficher goal_node.getPath() étape par étape
+        
     else:
         print("Optimal solution not found ")
 

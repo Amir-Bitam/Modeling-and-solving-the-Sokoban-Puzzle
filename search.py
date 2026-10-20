@@ -2,7 +2,15 @@ from collections import deque
 from node import Node
 
 
+
+
 class Search:
+
+
+    # ------------------------------------------------------------------
+    # Noufel
+    # ------------------------------------------------------------------
+
     
     @staticmethod 
     def breadthFirst(initial_node):

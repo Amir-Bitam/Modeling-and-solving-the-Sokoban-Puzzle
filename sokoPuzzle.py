@@ -1,21 +1,3 @@
-"""
-sokoPuzzle.py : modélisation de l'état du jeu Sokoban.
-
-Légende du board d'entrée (liste de listes de caractères) :
-    'O' => mur
-    ' ' => case vide
-    'S' => cible (storage)
-    'B' => caisse (box)
-    'R' => robot
-    '*' => caisse sur une cible
-    '.' => robot sur une cible
-
-Le board est séparé en deux grilles :
-    - wall_space_obstacle : éléments STATIQUES  -> 'O', 'S', ' '
-    - robot_block         : éléments DYNAMIQUES -> 'R', 'B', ' '
-Ainsi, un robot ou une caisse qui passe sur une cible n'efface jamais la cible.
-"""
-
 from copy import deepcopy
 
 
@@ -30,7 +12,7 @@ class SokobanPuzzle:
     }
 
     # ------------------------------------------------------------------
-    # MEMBRE 1
+    # Amir
     # ------------------------------------------------------------------
     def __init__(self, board):
         # On separe la grille fixe et la grille mobile.
@@ -115,6 +97,10 @@ class SokobanPuzzle:
             if i < self.height - 1:
                 texte += "\n"
         return texte
+    
+    # ------------------------------------------------------------------
+    # Amel
+    # ------------------------------------------------------------------
 
     def successorFunction(self):
         successors = []
