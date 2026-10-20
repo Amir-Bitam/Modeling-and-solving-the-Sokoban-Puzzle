@@ -16,7 +16,7 @@ Le board est séparé en deux grilles :
 Ainsi, un robot ou une caisse qui passe sur une cible n'efface jamais la cible.
 """
 
-from copy import copy
+from copy import deepcopy
 
 
 class SokobanPuzzle:
