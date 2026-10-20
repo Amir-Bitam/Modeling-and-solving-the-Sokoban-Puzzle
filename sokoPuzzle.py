@@ -116,11 +116,6 @@ class SokobanPuzzle:
                 texte += "\n"
         return texte
 
-    def _clone(self):
-        new_state = copy(self) 
-        new_state.robot_block = [row[:] for row in self.robot_block]
-        return new_state
-
     def successorFunction(self):
         successors = []
         ri, rj = self.robot_position #get robot_position from self
@@ -143,11 +138,11 @@ class SokobanPuzzle:
 
                 #else, move is valid, we make a clone of the state
 
-                new_state = self._clone()
+                new_state = deepcopy(self)
                 new_state.robot_block[nbi][nbj] = 'B' #move the box in the clone
 
             else: #if its not a box, it means its a free cell
-                new_state = self._clone()
+                new_state = deepcopy(self)
 
             #by the end of this if-else statement we have a clone of the state (either with a moved box or without) in both cases we have to move the robot
 
