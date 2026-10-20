@@ -16,13 +16,13 @@ Le board est séparé en deux grilles :
 Ainsi, un robot ou une caisse qui passe sur une cible n'efface jamais la cible.
 """
 
-from copy import deepcopy
+from copy import copy
 
 
 class SokobanPuzzle:
 
     # Action -> déplacement (ligne, colonne). CONTRAT : ne pas changer les clés.
-    DIRECTIONS = {
+    DIRECTION = {
         "U": (-1, 0),
         "D": (1, 0),
         "L": (0, -1),
@@ -116,42 +116,45 @@ class SokobanPuzzle:
                 texte += "\n"
         return texte
 
-    # ------------------------------------------------------------------
-    # MEMBRE 2
-    # ------------------------------------------------------------------
+    def _clone(self):
+        new_state = copy(self) 
+        new_state.robot_block = [row[:] for row in self.robot_block]
+        return new_state
+
     def successorFunction(self):
-        """
-        Retourne la liste des paires (action, successeur) pour tous les
-        mouvements valides depuis cet état.
-            -> [("U", SokobanPuzzle), ("R", SokobanPuzzle), ...]
+        successors = []
+        ri, rj = self.robot_position #get robot_position from self
 
-        TODO : pour chaque action dans self.moves :
-            (di, dj) = DIRECTIONS[action]
-            (ri, rj) = self.robot_position
-            (ni, nj) = (ri + di, rj + dj)          # case d'arrivée du robot
+        for action in self.moves:
+            x, y = self.DIRECTION[action] #get how much this move is gonna affect the robot position
+            ni, nj = ri + x, rj + y #calculate next position
 
-            1. Si wall_space_obstacle[ni][nj] == 'O'  -> mouvement invalide.
 
-            2. Si robot_block[ni][nj] == ' '          -> déplacement simple :
-                 successeur = deepcopy(self)
-                 successeur.robot_block[ri][rj] = ' '
-                 successeur.robot_block[ni][nj] = 'R'
-                 successeur.robot_position = (ni, nj)
+            #if next position is a wall, skip to next action
+            if self.wall_space_obstacle[ni][nj] == 'O': 
+                continue
 
-            3. Si robot_block[ni][nj] == 'B'          -> tentative de poussée :
-                 (bi, bj) = (ni + di, nj + dj)       # case derrière la caisse
-                 Valide seulement si wall_space_obstacle[bi][bj] != 'O'
-                                 ET robot_block[bi][bj] == ' '   (pas de 2e caisse)
-                 Sinon invalide. Si valide :
-                     successeur = deepcopy(self)
-                     successeur.robot_block[bi][bj] = 'B'
-                     successeur.robot_block[ni][nj] = 'R'
-                     successeur.robot_block[ri][rj] = ' '
-                     successeur.robot_position = (ni, nj)
+            #if next position is a box, we move box to the same direction
+            if self.robot_block[ni][nj] == 'B':
+                nbi , nbj = ni + x, nj + y #calculate next box position
 
-            4. Pour un mouvement valide : ajouter (action, successeur) à la liste.
+                if self.wall_space_obstacle[nbi][nbj] == 'O' or self.robot_block[nbi][nbj] == 'B':
+                    continue #if next box position is a wall or another box, move invalid, skip to next action
 
-        Attention : ne JAMAIS modifier self (on travaille sur la copie),
-        et ne jamais toucher à wall_space_obstacle.
-        """
-        raise NotImplementedError
+                #else, move is valid, we make a clone of the state
+
+                new_state = self._clone()
+                new_state.robot_block[nbi][nbj] = 'B' #move the box in the clone
+
+            else: #if its not a box, it means its a free cell
+                new_state = self._clone()
+
+            #by the end of this if-else statement we have a clone of the state (either with a moved box or without) in both cases we have to move the robot
+
+            new_state.robot_block[ri][rj] = ' ' #old position becomes empty cell
+            new_state.robot_block[ni][nj] = 'R' #move robot to new position
+            new_state.robot_position = (ni, nj) #update robot position for new state
+
+            successors.append((action, new_state))
+
+        return successors
