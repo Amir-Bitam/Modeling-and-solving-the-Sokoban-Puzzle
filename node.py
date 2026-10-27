@@ -1,4 +1,9 @@
 class Node:
+
+    # ------------------------------------------------------------------
+    # Noufel
+    # ------------------------------------------------------------------
+
     def __init__(self,state,parent = None ,action="",  c = 1):
         self.state = state
         self.parent = parent

@@ -31,7 +31,7 @@ class SokobanPuzzle:
     }
 
     # ------------------------------------------------------------------
-    # MEMBRE 1
+    # Amir
     # ------------------------------------------------------------------
     def __init__(self, board):
         # On separe la grille fixe et la grille mobile.
@@ -116,6 +116,10 @@ class SokobanPuzzle:
             if i < self.height - 1:
                 texte += "\n"
         return texte
+    
+    # ------------------------------------------------------------------
+    # Amel
+    # ------------------------------------------------------------------
 
     def successorFunction(self):
         successors = []
