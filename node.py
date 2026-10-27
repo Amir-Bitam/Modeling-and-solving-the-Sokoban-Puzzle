@@ -11,8 +11,10 @@ class Node:
 
         if parent is None:
             self.g = 0
+            self.f = 0
         else:
-            self.g = parent.g + c  
+            self.g = parent.g + c 
+            self.f =  0
 
     def getPath(self):
         current = self
@@ -33,3 +35,6 @@ class Node:
 
         path = path[::-1]
         return path
+
+    def setF(self, heuristic):
+        self.f = self.g + heuristic() 
