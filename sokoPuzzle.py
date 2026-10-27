@@ -16,6 +16,7 @@ Le board est séparé en deux grilles :
 Ainsi, un robot ou une caisse qui passe sur une cible n'efface jamais la cible.
 """
 
+from collections import deque
 from copy import deepcopy
 
 
@@ -153,3 +154,38 @@ class SokobanPuzzle:
             successors.append((action, new_state))
 
         return successors
+
+    def h1(self):
+        count = 0
+        for i in range(self.height):
+            for j in range(self.width):
+                if self.wall_space_obstacle[i][j] != 'S':
+                    if self.robot_block[i][j] == 'B':
+                        count += 1
+        return count
+
+    def h2(self):
+
+        UnplacedBoxes =  deque([])
+        GoalSpots = deque([])
+        
+        for i in range(self.height):
+            for j in range(self.width):
+                if self.wall_space_obstacle[i][j] != 'S':
+                    if self.robot_block[i][j] == 'B':
+                      UnplacedBoxes.append((i,j))  
+                else:
+                    if self.robot_block[i][j] != 'B':
+                        GoalSpots.append((i,j))
+
+        #bon hna dert fonction dakhel fonction besh le code il est un peu comprehensible 
+
+        def manhattan_distance(pos1, pos2):
+            return abs(pos1[0] - pos2[0]) + abs(pos1[1] - pos2[1])
+
+        total = 0
+        for box in UnplacedBoxes:
+            min_dist = min(manhattan_distance(box, target) for target in GoalSpots)
+            total += min_dist
+        return 2 * self.h1() + total
+        
