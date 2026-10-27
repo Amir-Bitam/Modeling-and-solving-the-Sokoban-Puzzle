@@ -24,12 +24,13 @@ def run(level_number):
     goal_node, num_steps = Search.breadthFirst(initial_node)
     elapsed = time.time() - start
 
+    print("\n--- BFS ---")
     if goal_node:
-        print(f"Optimal Solution found after {num_steps} steps")
+        print(f"Solution found after {num_steps} steps")
         print("Solution :", goal_node.getSolution())
         print("Cout du chemin :", goal_node.g)
         print(f"Temps : {elapsed:.2f} s")
-        
+        # TODO : afficher goal_node.getPath() étape par étape
     else:
         print("Optimal solution not found ")
 
