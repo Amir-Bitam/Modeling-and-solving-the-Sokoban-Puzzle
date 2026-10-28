@@ -54,23 +54,23 @@ class Search:
         counter = 0
 
     
-        heapq.heappush(open_list, (initial_node.f, counter, initial_node))
+        heapq.heappush(open_list, (initial_node.f, counter, initial_node)) # placer noeud initiale dans le tas
 
-        if initial_node.state.isGoal():
+        if initial_node.state.isGoal(): #i noeud initial is gal, we stop
             return (initial_node, 0)
 
-        while open_list:
-            _, _, current = heapq.heappop(open_list)
+        while open_list: #tant que there are still des noeud a explorer
+            _, _, current = heapq.heappop(open_list) # recuperer noeud avec le plus petit f
 
-            if current.g > closed[current.state]:
+            if current.g > closed[current.state]: #Si ce nœud possède un coût plus grand que le meilleur coût déjà enregistré pour le même état, il est ignoré.
                 continue
 
-            steps = steps + 1
+            steps = steps + 1 #compte le nombre de nœuds retirés du tas et développés.
 
-            if current.state.isGoal():
+            if current.state.isGoal(): 
                 return (current, steps)
 
-            for action, successor_state in current.state.successorFunction():
+            for action, successor_state in current.state.successorFunction(): #generation des enfants. chaque move produit un enfant
                 child = Node(successor_state, current, action)
 
                 if child.state not in closed or child.g < closed[child.state]:
