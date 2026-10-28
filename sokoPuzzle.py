@@ -195,31 +195,37 @@ class SokobanPuzzle:
 
     def h3(self):
         
-        unplaced_boxes = []
-        free_targets = []
+        unplaced_boxes = []  # List that holds positions of boxes not on targets
+        free_targets = [] # List that holds positions of free targets
 
+        #boucle imbriquée that goes through each cell in the matrice and fills the two lists above
         for i in range(self.height):
             for j in range(self.width):
-                if self.wall_space_obstacle[i][j] != 'S':
-                    if self.robot_block[i][j] == 'B':
+                if self.wall_space_obstacle[i][j] != 'S': 
+                    if self.robot_block[i][j] == 'B': #if not target and box
                         unplaced_boxes.append((i, j))
                 else:
-                    if self.robot_block[i][j] != 'B':
+                    if self.robot_block[i][j] != 'B': #if target and not box
                         free_targets.append((i, j))
 
-        if not unplaced_boxes:
+        if not unplaced_boxes: # if all boxes are on targets, return 0
             return 0
 
-        def manhattan_distance(pos1, pos2):
+        def manhattan_distance(pos1, pos2): # manhatten distance function
             return abs(pos1[0] - pos2[0]) + abs(pos1[1] - pos2[1])
 
+        # permutations(free_targets) : generates all possible permutations of targets
+        # for every permutation in permutations, we pair it with the list of boxes (assigns each target with each box in every permutation)
+        # for each of those assignments, we calculate the manhatten distance between box and target
+        # we sum the distances for each permutation and then take the min of them
         best_pushes = min(
             sum(manhattan_distance(box, target) for box, target in zip(unplaced_boxes, perm))
             for perm in permutations(free_targets)
         )
 
         robot = self.robot_position
-        walk = min(manhattan_distance(robot, box) for box in unplaced_boxes) - 1
+        walk = min(manhattan_distance(robot, box) for box in unplaced_boxes) - 1 #it calculates the distance between the robot and each unplaced box, then takes the min distance
 
+        #we add the walk distance to the min distance to push boxes to target
         return best_pushes + walk
         
