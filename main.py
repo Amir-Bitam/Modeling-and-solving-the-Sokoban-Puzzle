@@ -45,7 +45,7 @@ def run(level_number, algorithm):
         algo_name = "A* (h2)"
         goal_node, num_steps = Search.aStar(initial_node, SokobanPuzzle.h2)
 
-    elif algorithm == 3:
+    elif algorithm == 4:
         algo_name = "A* (h3)"
         goal_node, num_steps = Search.aStar(initial_node, SokobanPuzzle.h3)
 
