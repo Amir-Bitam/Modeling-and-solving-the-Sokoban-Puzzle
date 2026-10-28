@@ -84,7 +84,7 @@ if __name__ == "__main__":
     print("  1 — BFS")
     print("  2 — A* with h1  (unplaced boxes count)")
     print("  3 — A* with h2  (2*h1 + Manhattan distance to nearest target)")
-    print("  3 — A* with h3  (pairs boxes with different targets at the cheapest total distance,)")
+    print("  4 — A* with h3  (pairs boxes with different targets at the cheapest total distance,)")
     algorithm = int(input("  > "))
 
     run(level, algorithm)
