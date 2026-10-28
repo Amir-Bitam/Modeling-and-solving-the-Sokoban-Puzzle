@@ -37,4 +37,4 @@ class Node:
         return path
 
     def setF(self, heuristic):
-        self.f = self.g + heuristic() 
+        self.f = self.g + heuristic(self.state)
