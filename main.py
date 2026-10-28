@@ -45,6 +45,10 @@ def run(level_number, algorithm):
         algo_name = "A* (h2)"
         goal_node, num_steps = Search.aStar(initial_node, SokobanPuzzle.h2)
 
+    elif algorithm == 3:
+        algo_name = "A* (h3)"
+        goal_node, num_steps = Search.aStar(initial_node, SokobanPuzzle.h3)
+
     else:
         print("Invalid algorithm choice.")
         return
@@ -71,9 +75,7 @@ def run(level_number, algorithm):
 
 
 if __name__ == "__main__":
-    print("╔══════════════════════════╗")
-    print("║    Sokoban  Solver       ║")
-    print("╚══════════════════════════╝")
+
 
     print("\nChoose a level (1-5):")
     level = int(input("  > "))
@@ -81,7 +83,8 @@ if __name__ == "__main__":
     print("\nChoose an algorithm:")
     print("  1 — BFS")
     print("  2 — A* with h1  (unplaced boxes count)")
-    print("  3 — A* with h2  (h1 + Manhattan distance to nearest target)")
+    print("  3 — A* with h2  (2*h1 + Manhattan distance to nearest target)")
+    print("  3 — A* with h3  (pairs boxes with different targets at the cheapest total distance,)")
     algorithm = int(input("  > "))
 
     run(level, algorithm)

@@ -18,7 +18,7 @@ Ainsi, un robot ou une caisse qui passe sur une cible n'efface jamais la cible.
 
 from collections import deque
 from copy import deepcopy
-
+from itertools import permutations
 
 class SokobanPuzzle:
 
@@ -192,4 +192,34 @@ class SokobanPuzzle:
             min_dist = min(manhattan_distance(box, target) for target in GoalSpots)
             total += min_dist
         return 2 * self.h1() + total
+
+    def h3(self):
+        
+        unplaced_boxes = []
+        free_targets = []
+
+        for i in range(self.height):
+            for j in range(self.width):
+                if self.wall_space_obstacle[i][j] != 'S':
+                    if self.robot_block[i][j] == 'B':
+                        unplaced_boxes.append((i, j))
+                else:
+                    if self.robot_block[i][j] != 'B':
+                        free_targets.append((i, j))
+
+        if not unplaced_boxes:
+            return 0
+
+        def manhattan_distance(pos1, pos2):
+            return abs(pos1[0] - pos2[0]) + abs(pos1[1] - pos2[1])
+
+        best_pushes = min(
+            sum(manhattan_distance(box, target) for box, target in zip(unplaced_boxes, perm))
+            for perm in permutations(free_targets)
+        )
+
+        robot = self.robot_position
+        walk = min(manhattan_distance(robot, box) for box in unplaced_boxes) - 1
+
+        return best_pushes + walk
         
